@@ -19,7 +19,11 @@ public class SignalHandlerImplementation implements SignalHandler {
     @Override
     public void handleSignal(int signal) {
         SignalHandlerStrategy signalHandlerStrategy = component.findStrategy(signal);
-        signalHandlerStrategy.handleSignal(signal);
-
+        if (signalHandlerStrategy != null) {
+            signalHandlerStrategy.handleSignal(signal);
+        } else {
+            logger.info("DEFAULT_EXECUTED");
+            algo.cancelTrades();
+        }
     }
 }
